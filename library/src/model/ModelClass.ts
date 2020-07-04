@@ -3,6 +3,8 @@ import { ModelObject } from './ModelObject';
 import { Predicate } from './Predicate';
 import { PredicateEnumeration } from './PredicateEnumeration';
 import { PredicateRange } from './PredicateRange';
+import { InvalidModelObject } from 'exceptions/InvalidModelObject';
+import { UnexpectedPredicate } from 'exceptions/UnexpectedPredicate';
 
 export abstract class ModelClass<T> extends ModelElement {
   predicate: Predicate<T>;
@@ -12,6 +14,47 @@ export abstract class ModelClass<T> extends ModelElement {
   }
 
   abstract createObject(value: any): ModelObject<T>;
+
+  readObject(value: any): ModelObject<T> {
+    if (this.predicate == null) {
+      return this.createObject(value);
+    } else if (this.predicate.isAggregate()) {
+      return this.createObject(value);
+    } else if (this.predicate.isEnumerable()) {
+      const result = this.predicate
+        .getEnumeration()
+        .find((entry) => value === entry.id);
+      if (result == null) {
+        throw new InvalidModelObject(
+          `The specified value is not an element of the enumeration of class ${this.id}`
+        );
+      }
+      return result;
+    } else if (this.predicate.isRange()) {
+      const result = this.createObject(value);
+      if (result == null) {
+        throw new InvalidModelObject(
+          `The specified value could not be used to create a ModelObject instance of class ${this.id}`
+        );
+      }
+      if (
+        this.predicate.getMinimum().native <= result.native &&
+        this.predicate.getMaximum().native >= result.native
+      ) {
+        return result;
+      } else {
+        throw new InvalidModelObject(
+          `The specified value is not in the range of ${
+            this.predicate.getMinimum().native
+          } - ${this.predicate.getMaximum().native}.`
+        );
+      }
+    } else {
+      throw new UnexpectedPredicate(
+        `The class ${this.id} has an unexpected predicate.`
+      );
+    }
+  }
 
   toJSON(_key?: string | undefined): any {
     const result: any = { id: this.id, properties: this.properties };

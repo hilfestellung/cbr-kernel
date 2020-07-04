@@ -1,1 +1,1 @@
-console.log("Hallo");
+export * from './model';
