@@ -38,8 +38,8 @@ export abstract class ModelObject<T> extends ModelElement {
       (languages = Object.keys(this.properties)).length > 0
     ) {
       labels = languages
-        .filter((lang) => this.properties[lang].label != null)
-        .map((lang) => lang + '=>' + this.properties[lang].label);
+        .filter((lang) => !!this.properties[lang].label)
+        .map((lang) => lang + "=>'" + this.properties[lang].label + "'");
     }
     return (
       '<' +
