@@ -6,6 +6,12 @@ describe('StringClass', () => {
   it('should create string based ModelObject from string', () => {
     const clazz = new StringClass('TestClass');
     const obj = clazz.createObject('test');
+    expect(clazz.isString()).toBe(true);
+    expect(clazz.isAggregate()).toBe(false);
+    expect(clazz.isDate()).toBe(false);
+    expect(clazz.isFloat()).toBe(false);
+    expect(clazz.isInteger()).toBe(false);
+    expect(clazz.isSet()).toBe(false);
     expect(obj.isString()).toBe(true);
     expect(obj.isAggregate()).toBe(false);
     expect(obj.isDate()).toBe(false);

@@ -1,3 +1,5 @@
+export * from './IntegerClass';
+export * from './IntegerObject';
 export * from './ModelClass';
 export * from './ModelElement';
 export * from './ModelObject';
