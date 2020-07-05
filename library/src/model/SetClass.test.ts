@@ -5,7 +5,7 @@ import { IntegerClass } from './IntegerClass';
 import { IntegerObject } from './IntegerObject';
 
 describe('SetClass', () => {
-  it('should create integer based ModelObject from number', () => {
+  it('should create integer based ModelObject set from number', () => {
     const clazz = new SetClass('TestClass', new IntegerClass('TestClass2'));
     expect(clazz.isSet()).toBe(true);
     expect(clazz.isAggregate()).toBe(false);
@@ -28,7 +28,7 @@ describe('SetClass', () => {
       new IntegerObject(7),
     ]);
   });
-  it('should create integer based ModelObject from string', () => {
+  it('should create integer based ModelObject set from string', () => {
     const clazz = new SetClass('TestClass', new IntegerClass('TestClass2'));
     const obj = clazz.createObject(['5', '6', '7']);
     expect(obj.isSet()).toBe(true);
@@ -45,20 +45,20 @@ describe('SetClass', () => {
       new IntegerObject(7, undefined),
     ]);
   });
-  it('should create integer based ModelObject from object with id property', () => {
+  it('should create integer based ModelObject set from object with id property', () => {
     const clazz = new SetClass('TestClass', new IntegerClass('TestClass2'));
     const obj = clazz.createObject([
       {
         id: 5,
-        // properties: { de: { label: 'Fünf' } },
+        properties: { de: { label: 'Fünf' } },
       },
       {
         id: 6,
-        // properties: { de: { label: 'Sechs' } },
+        properties: { de: { label: 'Sechs' } },
       },
       {
         id: 7,
-        // properties: { de: { label: 'Sieben' } },
+        properties: { de: { label: 'Sieben' } },
       },
     ]);
     expect(obj.isSet()).toBe(true);
@@ -70,9 +70,9 @@ describe('SetClass', () => {
     expect(obj.native).not.toBeUndefined();
     expect(obj.native).not.toBeNull();
     expect(obj.native).toEqual([
-      new IntegerObject(5, undefined),
-      new IntegerObject(6, undefined),
-      new IntegerObject(7, undefined),
+      new IntegerObject(5, { de: { label: 'Fünf' } }),
+      new IntegerObject(6, { de: { label: 'Sechs' } }),
+      new IntegerObject(7, { de: { label: 'Sieben' } }),
     ]);
   });
   it('should throw NullValue error', () => {

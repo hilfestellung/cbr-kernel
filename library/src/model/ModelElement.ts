@@ -1,3 +1,20 @@
+export function toType(modelElement: ModelElement): string {
+  if (modelElement.isAggregate()) {
+    return 'aggregate';
+  } else if (modelElement.isDate()) {
+    return 'date';
+  } else if (modelElement.isFloat()) {
+    return 'float';
+  } else if (modelElement.isInteger()) {
+    return 'integer';
+  } else if (modelElement.isString()) {
+    return 'string';
+  } else if (modelElement.isSet()) {
+    return 'set';
+  }
+  return (undefined as unknown) as string;
+}
+
 export abstract class ModelElement {
   properties: { [language: string]: any };
   abstract get id(): any;

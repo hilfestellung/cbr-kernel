@@ -9,4 +9,7 @@ export class SetObject<T> extends ModelObject<ModelObject<T>[]> {
   isSet() {
     return true;
   }
+  toJSON(key?: string): any {
+    return this.native.map((modelObject) => modelObject.toJSON(key));
+  }
 }

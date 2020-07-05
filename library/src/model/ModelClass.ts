@@ -1,4 +1,4 @@
-import { ModelElement } from './ModelElement';
+import { ModelElement, toType } from './ModelElement';
 import { ModelObject } from './ModelObject';
 import { Predicate } from './Predicate';
 import { PredicateEnumeration } from './PredicateEnumeration';
@@ -58,19 +58,7 @@ export abstract class ModelClass<T> extends ModelElement {
 
   toJSON(_key?: string | undefined): any {
     const result: any = { id: this.id, properties: this.properties };
-    if (this.isAggregate()) {
-      result.type = 'aggregate';
-    } else if (this.isDate()) {
-      result.type = 'date';
-    } else if (this.isFloat()) {
-      result.type = 'float';
-    } else if (this.isInteger()) {
-      result.type = 'integer';
-    } else if (this.isString()) {
-      result.type = 'string';
-    } else if (this.isSet()) {
-      result.type = 'set';
-    }
+    result.type = toType(this);
     if (this.predicate != null) {
       if (this.predicate.isEnumerable()) {
         const predicate = this.predicate as PredicateEnumeration<T>;
