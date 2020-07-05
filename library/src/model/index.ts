@@ -1,3 +1,5 @@
+export * from './FloatClass';
+export * from './FloatObject';
 export * from './IntegerClass';
 export * from './IntegerObject';
 export * from './ModelClass';
