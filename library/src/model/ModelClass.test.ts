@@ -5,6 +5,7 @@ import { PredicateEnumeration } from './PredicateEnumeration';
 import { PredicateRange } from './PredicateRange';
 import { PredicateAggregate } from './PredicateAggregate';
 import { InvalidModelObject } from 'exceptions/InvalidModelObject';
+import { UnexpectedPredicate } from 'exceptions/UnexpectedPredicate';
 
 describe('ModelClass', () => {
   const ImplClass = class extends ModelClass<any> {
@@ -58,6 +59,26 @@ describe('ModelClass', () => {
     }
     isString() {
       return this.type === 'str';
+    }
+  };
+  const ImplePred = class implements Predicate<any> {
+    isAggregate(): boolean {
+      return false;
+    }
+    isEnumerable(): boolean {
+      return false;
+    }
+    isRange(): boolean {
+      return false;
+    }
+    getEnumeration(): ModelObject<any>[] {
+      throw new Error('Method not implemented.');
+    }
+    getMinimum(): ModelObject<any> {
+      throw new Error('Method not implemented.');
+    }
+    getMaximum(): ModelObject<any> {
+      throw new Error('Method not implemented.');
     }
   };
 
@@ -221,6 +242,11 @@ describe('ModelClass', () => {
     inst.predicate = new PredicateRange(min, max);
     inst.createObject = jest.fn().mockReturnValue(null);
     expect(() => inst.readObject(4)).toThrowError(InvalidModelObject);
+  });
+  it('should readObject and throw UnexpectedPredicate error', () => {
+    const inst = new ImplClass('TestClass', 'int');
+    inst.predicate = new ImplePred();
+    expect(() => inst.readObject(4)).toThrowError(UnexpectedPredicate);
   });
   it('should readObject as created object of integer between 4 and 11', () => {
     const inst = new ImplClass('TestClass', 'int');
