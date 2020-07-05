@@ -1,3 +1,5 @@
+export * from './DateClass';
+export * from './DateObject';
 export * from './FloatClass';
 export * from './FloatObject';
 export * from './IntegerClass';

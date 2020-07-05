@@ -3,7 +3,7 @@ import { NullValue } from 'exceptions/NullValue';
 import { InvalidValue } from 'exceptions/InvalidValue';
 
 describe('FloatClass', () => {
-  it('should create integer based ModelObject from number', () => {
+  it('should create float based ModelObject from number', () => {
     const clazz = new FloatClass('TestClass');
     expect(clazz.isFloat()).toBe(true);
     expect(clazz.isAggregate()).toBe(false);
@@ -22,7 +22,7 @@ describe('FloatClass', () => {
     expect(obj.id).not.toBeNull();
     expect(obj.id).toBe(5.81);
   });
-  it('should create integer based ModelObject from string', () => {
+  it('should create float based ModelObject from string', () => {
     const clazz = new FloatClass('TestClass');
     const obj = clazz.createObject('5.81');
     expect(obj.isFloat()).toBe(true);
@@ -35,7 +35,7 @@ describe('FloatClass', () => {
     expect(obj.id).not.toBeNull();
     expect(obj.id).toBe(5.81);
   });
-  it('should create integer based ModelObject from object with id property', () => {
+  it('should create float based ModelObject from object with id property', () => {
     const clazz = new FloatClass('TestClass');
     const obj = clazz.createObject({
       id: 5.81,
