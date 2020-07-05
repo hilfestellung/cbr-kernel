@@ -5,8 +5,9 @@ export abstract class ModelObject<T> extends ModelElement {
     return this.id;
   }
 
-  constructor(public id: T) {
+  constructor(public id: T, properties?: any) {
     super();
+    this.properties = properties;
   }
 
   abstract nativeToString(): string;
