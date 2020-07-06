@@ -83,4 +83,11 @@ describe('SetClass', () => {
     const clazz = new SetClass('TestClass', new IntegerClass('TestClass2'));
     expect(() => clazz.createObject(new Date())).toThrow(InvalidValue);
   });
+  it('should convert by toJSON to the expected format', () => {
+    const clazz = new SetClass('TestClass', new IntegerClass('TestClass2'));
+    const json = clazz.toJSON();
+    expect(json.id).toBe('TestClass');
+    expect(json.type).toBe('set');
+    expect(json.elementType).toBe('TestClass2');
+  });
 });

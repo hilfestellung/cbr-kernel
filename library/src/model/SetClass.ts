@@ -3,7 +3,6 @@ import { ModelObject } from './ModelObject';
 import { SetObject } from './SetObject';
 import { InvalidValue } from 'exceptions/InvalidValue';
 import { NullValue } from 'exceptions/NullValue';
-import { toType } from './ModelElement';
 
 export class SetClass<T> extends ModelClass<ModelObject<T>[]> {
   constructor(id: string, public elementModelClass: ModelClass<T>) {
@@ -25,7 +24,7 @@ export class SetClass<T> extends ModelClass<ModelObject<T>[]> {
   }
   toJSON(key?: string): any {
     const result = super.toJSON(key);
-    result.elementType = toType(this.elementModelClass);
+    result.elementType = this.elementModelClass.id;
     return result;
   }
 }
