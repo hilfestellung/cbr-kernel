@@ -1,3 +1,6 @@
+export * from './AggregateClass';
+export * from './AggregateObject';
+export * from './Attribute';
 export * from './DateClass';
 export * from './DateObject';
 export * from './FloatClass';
