@@ -18,7 +18,7 @@ export class SimilarityEvaluator<T> {
     );
   }
 
-  toJSON(): any {
+  toJSON(_key?: string): any {
     return { id: this.id, type: this.modelClass.id };
   }
 }
