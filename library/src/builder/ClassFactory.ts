@@ -13,11 +13,31 @@ import {
   StringClass,
 } from 'model';
 import {} from 'model/Attribute';
+import { findClass } from './ClassUtils';
 
 export function modelFactory(input: any) {
+  const classes: ModelClass<any>[] = [];
+  const result = { classes };
   if (Array.isArray(input.classes)) {
-    input.classes.map(classFactory);
+    classes.splice(0, 0, input.classes.map(classFactory));
+    classes
+      .filter((clazz) => clazz.isAggregate())
+      .forEach((clazz: AggregateClass) => {
+        clazz.attributes.forEach((attribute) => {
+          if (attribute.typeId) {
+            attribute.modelClass = findClass(classes, attribute.typeId);
+          }
+        });
+      });
+    classes
+      .filter((clazz) => clazz.isSet())
+      .forEach((clazz: SetClass<any>) => {
+        if (clazz.elementTypeId) {
+          clazz.elementModelClass = findClass(classes, clazz.elementTypeId);
+        }
+      });
   }
+  return result;
 }
 
 export function classFactory(input: any): ModelClass<any> | null {
@@ -45,8 +65,7 @@ export function aggregateFactory(input: any): AggregateClass {
     result = new AggregateClass(
       input.id,
       input.attributes.map(
-        (attribute: any) =>
-          new Attribute(attribute.id, (null as unknown) as ModelClass<any>)
+        (attribute: any) => new Attribute(attribute.id, attribute.type)
       )
     );
   } else {
@@ -58,7 +77,7 @@ export function aggregateFactory(input: any): AggregateClass {
 }
 
 export function setFactory(input: any): SetClass<any> {
-  const result = new SetClass(input.id, (null as unknown) as ModelClass<any>);
+  const result = new SetClass(input.id, input.elementType);
   result.properties = input.properties;
   return result;
 }

@@ -1,4 +1,5 @@
-import { ModelElement } from './ModelElement';
+import { ModelElement, toType } from './ModelElement';
+import { ModelObject } from './ModelObject';
 
 describe('ModelElement', () => {
   const Impl = class extends ModelElement {
@@ -17,6 +18,32 @@ describe('ModelElement', () => {
     }
     toJSON(_key?: string | undefined) {
       throw new Error('Method not implemented.');
+    }
+  };
+  const ImplModObj = class extends ModelObject<any> {
+    constructor(id: any, private type?: string) {
+      super(id);
+    }
+    nativeToString(): string {
+      return this.id.toString();
+    }
+    isAggregate() {
+      return this.type === 'agg';
+    }
+    isDate() {
+      return this.type === 'dat';
+    }
+    isFloat() {
+      return this.type === 'flt';
+    }
+    isInteger() {
+      return this.type === 'int';
+    }
+    isSet() {
+      return this.type === 'set';
+    }
+    isString() {
+      return this.type === 'str';
     }
   };
 
@@ -73,5 +100,14 @@ describe('ModelElement', () => {
     expect(inst).not.toBeNull();
     expect(inst).not.toBeUndefined();
     expect(inst.getProperty('tr', 'url')).toBeNull();
+  });
+  it('should convert type correctly', () => {
+    expect(toType(new ImplModObj('Test', 'agg'))).toBe('aggregate');
+    expect(toType(new ImplModObj('Test', 'set'))).toBe('set');
+    expect(toType(new ImplModObj('Test', 'str'))).toBe('string');
+    expect(toType(new ImplModObj('Test', 'int'))).toBe('integer');
+    expect(toType(new ImplModObj('Test', 'flt'))).toBe('float');
+    expect(toType(new ImplModObj('Test', 'dat'))).toBe('date');
+    expect(toType(new ImplModObj('Test'))).toBeUndefined();
   });
 });

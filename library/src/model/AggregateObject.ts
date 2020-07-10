@@ -5,6 +5,10 @@ export class AggregateObject extends ModelObject<any> {
     super(id);
   }
 
+  isAggregate() {
+    return true;
+  }
+
   get native(): any {
     return this.aggregate;
   }
@@ -17,7 +21,7 @@ export class AggregateObject extends ModelObject<any> {
     const result = super.toJSON(key);
     result.attributes = Object.entries(this.aggregate).map((entry) => ({
       id: entry[0],
-      value: entry[1],
+      value: (entry[1] as ModelObject<any>).toJSON(),
     }));
     return result;
   }

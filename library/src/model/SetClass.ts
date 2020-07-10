@@ -5,9 +5,21 @@ import { InvalidValue } from 'exceptions/InvalidValue';
 import { NullValue } from 'exceptions/NullValue';
 
 export class SetClass<T> extends ModelClass<ModelObject<T>[]> {
-  constructor(id: string, public elementModelClass: ModelClass<T>) {
+  private elementModelClassHolder: ModelClass<T>;
+
+  constructor(id: string, public elementTypeId?: string) {
     super(id);
   }
+
+  get elementModelClass(): ModelClass<T> {
+    return this.elementModelClassHolder;
+  }
+
+  set elementModelClass(modelClass: ModelClass<T>) {
+    this.elementModelClassHolder = modelClass;
+    this.elementTypeId = modelClass.id;
+  }
+
   createObject(value: any): ModelObject<ModelObject<T>[]> {
     if (value == null) {
       throw new NullValue();
@@ -19,12 +31,16 @@ export class SetClass<T> extends ModelClass<ModelObject<T>[]> {
     }
     throw new InvalidValue();
   }
+
   isSet() {
     return true;
   }
+
   toJSON(key?: string): any {
     const result = super.toJSON(key);
-    result.elementType = this.elementModelClass.id;
+    if (this.elementModelClass != null) {
+      result.elementType = this.elementModelClass.id;
+    }
     return result;
   }
 }

@@ -6,7 +6,7 @@ import { v4 } from 'uuid';
 
 export class AggregateClass extends ModelClass<any> {
   private attributeMap: any = {};
-  constructor(public id: string, public attributes: Attribute[]) {
+  constructor(public id: string, private attributes: Attribute[]) {
     super(id);
     attributes.forEach(
       (attribute) => (this.attributeMap[attribute.id] = attribute)
@@ -40,12 +40,12 @@ export class AggregateClass extends ModelClass<any> {
   }
 
   getAttribute(id: string): Attribute | undefined {
-    return this.attributes.find((attribute) => attribute.id === id);
+    return this.attributeMap[id];
   }
 
   toJSON(key?: string): any {
     const result = super.toJSON(key);
-    result.attributes = this.attributes;
+    result.attributes = this.attributes.map((attribute) => attribute.toJSON());
     return result;
   }
 }

@@ -6,7 +6,8 @@ import { IntegerObject } from './IntegerObject';
 
 describe('SetClass', () => {
   it('should create integer based ModelObject set from number', () => {
-    const clazz = new SetClass('TestClass', new IntegerClass('TestClass2'));
+    const clazz = new SetClass('TestClass');
+    clazz.elementModelClass = new IntegerClass('TestClass2');
     expect(clazz.isSet()).toBe(true);
     expect(clazz.isAggregate()).toBe(false);
     expect(clazz.isDate()).toBe(false);
@@ -29,7 +30,8 @@ describe('SetClass', () => {
     ]);
   });
   it('should create integer based ModelObject set from string', () => {
-    const clazz = new SetClass('TestClass', new IntegerClass('TestClass2'));
+    const clazz = new SetClass('TestClass');
+    clazz.elementModelClass = new IntegerClass('TestClass2');
     const obj = clazz.createObject(['5', '6', '7']);
     expect(obj.isSet()).toBe(true);
     expect(obj.isAggregate()).toBe(false);
@@ -46,7 +48,8 @@ describe('SetClass', () => {
     ]);
   });
   it('should create integer based ModelObject set from object with id property', () => {
-    const clazz = new SetClass('TestClass', new IntegerClass('TestClass2'));
+    const clazz = new SetClass('TestClass');
+    clazz.elementModelClass = new IntegerClass('TestClass2');
     const obj = clazz.createObject([
       {
         id: 5,
@@ -76,15 +79,18 @@ describe('SetClass', () => {
     ]);
   });
   it('should throw NullValue error', () => {
-    const clazz = new SetClass('TestClass', new IntegerClass('TestClass2'));
+    const clazz = new SetClass('TestClass');
+    clazz.elementModelClass = new IntegerClass('TestClass2');
     expect(() => clazz.createObject(null)).toThrow(NullValue);
   });
   it('should throw InvalidValue error', () => {
-    const clazz = new SetClass('TestClass', new IntegerClass('TestClass2'));
+    const clazz = new SetClass('TestClass');
+    clazz.elementModelClass = new IntegerClass('TestClass2');
     expect(() => clazz.createObject(new Date())).toThrow(InvalidValue);
   });
   it('should convert by toJSON to the expected format', () => {
-    const clazz = new SetClass('TestClass', new IntegerClass('TestClass2'));
+    const clazz = new SetClass('TestClass');
+    clazz.elementModelClass = new IntegerClass('TestClass2');
     const json = clazz.toJSON();
     expect(json.id).toBe('TestClass');
     expect(json.type).toBe('set');
