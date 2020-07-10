@@ -66,7 +66,6 @@ export class LookupEvaluator extends SimilarityEvaluator<any> {
     } else {
       this.lookupHolder = lookup;
     }
-    console.log(this.lookupHolder);
   }
 
   evaluate(
