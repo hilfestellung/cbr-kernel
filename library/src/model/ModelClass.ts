@@ -3,8 +3,8 @@ import { ModelObject } from './ModelObject';
 import { Predicate } from './Predicate';
 import { PredicateEnumeration } from './PredicateEnumeration';
 import { PredicateRange } from './PredicateRange';
-import { InvalidModelObject } from 'exceptions/InvalidModelObject';
-import { UnexpectedPredicate } from 'exceptions/UnexpectedPredicate';
+import { InvalidModelObject } from '../exceptions/InvalidModelObject';
+import { UnexpectedPredicate } from '../exceptions/UnexpectedPredicate';
 
 export abstract class ModelClass<T> extends ModelElement {
   predicate: Predicate<T>;

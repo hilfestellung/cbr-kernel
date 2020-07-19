@@ -1,6 +1,6 @@
 import { StringClass } from './StringClass';
-import { NullValue } from 'exceptions/NullValue';
-import { InvalidValue } from 'exceptions/InvalidValue';
+import { NullValue } from '../exceptions/NullValue';
+import { InvalidValue } from '../exceptions/InvalidValue';
 
 describe('StringClass', () => {
   it('should create string based ModelObject from string', () => {

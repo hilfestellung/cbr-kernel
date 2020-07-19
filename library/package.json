@@ -1,6 +1,6 @@
 {
   "name": "@hilfestellung/cbr-kernel",
-  "version": "0.0.1",
+  "version": "0.0.6",
   "description": "Case Based Reasoning Kernel",
   "author": "Christian Dein",
   "license": "LGPL-2.1-or-later",
@@ -12,6 +12,7 @@
     "registry": "https://npm.pkg.github.com/"
   },
   "main": "dist/index.js",
+  "type": "dist/index.d.ts",
   "scripts": {
     "start": "node ./dist/index.js",
     "build": "tsc",

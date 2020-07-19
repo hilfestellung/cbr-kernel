@@ -1,5 +1,5 @@
 import { Similarity } from './Similarity';
-import { IntegerObject } from 'model/IntegerObject';
+import { IntegerObject } from '../model/IntegerObject';
 
 describe('Similarity', () => {
   it('should serialize correct to JSON', () => {

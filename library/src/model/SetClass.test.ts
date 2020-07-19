@@ -1,6 +1,6 @@
 import { SetClass } from './SetClass';
-import { NullValue } from 'exceptions/NullValue';
-import { InvalidValue } from 'exceptions/InvalidValue';
+import { NullValue } from '../exceptions/NullValue';
+import { InvalidValue } from '../exceptions/InvalidValue';
 import { IntegerClass } from './IntegerClass';
 import { IntegerObject } from './IntegerObject';
 

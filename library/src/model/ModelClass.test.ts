@@ -4,8 +4,8 @@ import { Predicate } from './Predicate';
 import { PredicateEnumeration } from './PredicateEnumeration';
 import { PredicateRange } from './PredicateRange';
 import { PredicateAggregate } from './PredicateAggregate';
-import { InvalidModelObject } from 'exceptions/InvalidModelObject';
-import { UnexpectedPredicate } from 'exceptions/UnexpectedPredicate';
+import { InvalidModelObject } from '../exceptions/InvalidModelObject';
+import { UnexpectedPredicate } from '../exceptions/UnexpectedPredicate';
 
 describe('ModelClass', () => {
   const ImplClass = class extends ModelClass<any> {

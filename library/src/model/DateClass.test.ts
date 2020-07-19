@@ -1,6 +1,6 @@
 import { DateClass } from './DateClass';
-import { NullValue } from 'exceptions/NullValue';
-import { InvalidValue } from 'exceptions/InvalidValue';
+import { NullValue } from '../exceptions/NullValue';
+import { InvalidValue } from '../exceptions/InvalidValue';
 
 describe('DateClass', () => {
   it('should create date based ModelObject from date', () => {

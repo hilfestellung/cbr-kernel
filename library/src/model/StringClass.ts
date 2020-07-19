@@ -1,8 +1,8 @@
 import { ModelClass } from './ModelClass';
 import { ModelObject } from './ModelObject';
 import { StringObject } from './StringObject';
-import { NullValue } from 'exceptions/NullValue';
-import { InvalidValue } from 'exceptions/InvalidValue';
+import { NullValue } from '../exceptions/NullValue';
+import { InvalidValue } from '../exceptions/InvalidValue';
 
 export class StringClass extends ModelClass<string> {
   createObject(value: any): ModelObject<string> {

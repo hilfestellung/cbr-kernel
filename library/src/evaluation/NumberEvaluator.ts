@@ -1,7 +1,7 @@
 import { Similarity } from './Similarity';
 import { SimilarityEvaluator } from './SimilarityEvaluator';
-import { ModelClass } from 'model/ModelClass';
-import { ModelObject } from 'model/ModelObject';
+import { ModelClass } from '../model/ModelClass';
+import { ModelObject } from '../model/ModelObject';
 
 function getDistance(
   v1: number,

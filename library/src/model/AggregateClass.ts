@@ -6,7 +6,7 @@ import { v4 } from 'uuid';
 
 export class AggregateClass extends ModelClass<any> {
   private attributeMap: any = {};
-  constructor(public id: string, private attributes: Attribute[]) {
+  constructor(public id: string, public attributes: Attribute[]) {
     super(id);
     attributes.forEach(
       (attribute) => (this.attributeMap[attribute.id] = attribute)

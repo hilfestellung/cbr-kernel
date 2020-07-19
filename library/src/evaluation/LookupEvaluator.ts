@@ -1,5 +1,5 @@
 import { SimilarityEvaluator } from './SimilarityEvaluator';
-import { ModelObject, ModelClass } from 'model';
+import { ModelObject, ModelClass } from '../model';
 import { Similarity } from './Similarity';
 
 function makeSymmetric(lookup: LookupTable): LookupTable {

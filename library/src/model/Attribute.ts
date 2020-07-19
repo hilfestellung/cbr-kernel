@@ -37,7 +37,7 @@ export class Attribute extends ModelObject<string> {
 
   toJSON(key?: string): any {
     const result = super.toJSON(key);
-    result.type = this.modelClass.id;
+    result.type = this.modelClass != null ? this.modelClass.id : this.typeId;
     return result;
   }
 }

@@ -1,6 +1,6 @@
 import { IntegerClass } from './IntegerClass';
-import { NullValue } from 'exceptions/NullValue';
-import { InvalidValue } from 'exceptions/InvalidValue';
+import { NullValue } from '../exceptions/NullValue';
+import { InvalidValue } from '../exceptions/InvalidValue';
 
 describe('IntegerClass', () => {
   it('should create integer based ModelObject from number', () => {

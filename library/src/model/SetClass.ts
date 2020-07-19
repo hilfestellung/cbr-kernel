@@ -1,8 +1,8 @@
 import { ModelClass } from './ModelClass';
 import { ModelObject } from './ModelObject';
 import { SetObject } from './SetObject';
-import { InvalidValue } from 'exceptions/InvalidValue';
-import { NullValue } from 'exceptions/NullValue';
+import { InvalidValue } from '../exceptions/InvalidValue';
+import { NullValue } from '../exceptions/NullValue';
 
 export class SetClass<T> extends ModelClass<ModelObject<T>[]> {
   private elementModelClassHolder: ModelClass<T>;

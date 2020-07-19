@@ -1,6 +1,6 @@
 import { FloatClass } from './FloatClass';
-import { NullValue } from 'exceptions/NullValue';
-import { InvalidValue } from 'exceptions/InvalidValue';
+import { NullValue } from '../exceptions/NullValue';
+import { InvalidValue } from '../exceptions/InvalidValue';
 
 describe('FloatClass', () => {
   it('should create float based ModelObject from number', () => {

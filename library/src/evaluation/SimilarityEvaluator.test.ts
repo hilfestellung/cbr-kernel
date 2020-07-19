@@ -1,6 +1,6 @@
 import { SimilarityEvaluator } from './SimilarityEvaluator';
-import { IntegerClass } from 'model/IntegerClass';
-import { IntegerObject } from 'model/IntegerObject';
+import { IntegerClass } from '../model/IntegerClass';
+import { IntegerObject } from '../model/IntegerObject';
 import { Similarity } from './Similarity';
 
 describe('SimilarityEvaluator', () => {

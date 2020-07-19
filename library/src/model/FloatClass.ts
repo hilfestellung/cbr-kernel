@@ -1,8 +1,8 @@
 import { ModelClass } from './ModelClass';
 import { ModelObject } from './ModelObject';
-import { NullValue } from 'exceptions/NullValue';
+import { NullValue } from '../exceptions/NullValue';
 import { FloatObject } from './FloatObject';
-import { InvalidValue } from 'exceptions/InvalidValue';
+import { InvalidValue } from '../exceptions/InvalidValue';
 
 export class FloatClass extends ModelClass<number> {
   createObject(value: any): ModelObject<number> {

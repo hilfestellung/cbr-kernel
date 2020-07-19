@@ -1,8 +1,8 @@
 import { LookupEvaluator, LookupMode } from './LookupEvaluator';
-import { StringClass } from 'model/StringClass';
-import { StringObject } from 'model/StringObject';
+import { StringClass } from '../model/StringClass';
+import { StringObject } from '../model/StringObject';
 import { Similarity } from './Similarity';
-import { ModelObject } from 'model';
+import { ModelObject } from '../model';
 
 describe('LookupEvaluator', () => {
   const red = new StringObject('red');

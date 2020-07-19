@@ -1,8 +1,8 @@
 import { ModelClass } from './ModelClass';
 import { ModelObject } from './ModelObject';
-import { NullValue } from 'exceptions/NullValue';
+import { NullValue } from '../exceptions/NullValue';
 import { DateObject } from './DateObject';
-import { InvalidValue } from 'exceptions/InvalidValue';
+import { InvalidValue } from '../exceptions/InvalidValue';
 
 export class DateClass extends ModelClass<Date> {
   createObject(value: any): ModelObject<Date> {
@@ -29,6 +29,7 @@ export class DateClass extends ModelClass<Date> {
     }
     throw new InvalidValue();
   }
+
   isDate() {
     return true;
   }

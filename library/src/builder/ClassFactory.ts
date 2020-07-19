@@ -11,8 +11,8 @@ import {
   PredicateRange,
   SetClass,
   StringClass,
-} from 'model';
-import {} from 'model/Attribute';
+} from '../model/index';
+import {} from '../model/Attribute';
 import { findClass } from './ClassUtils';
 
 export function modelFactory(input: any) {

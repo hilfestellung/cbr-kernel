@@ -1,4 +1,4 @@
-import { ModelObject } from 'model';
+import { ModelObject } from '../model';
 
 export class Similarity {
   constructor(

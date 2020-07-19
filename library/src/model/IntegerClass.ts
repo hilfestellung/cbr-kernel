@@ -1,8 +1,8 @@
 import { ModelClass } from './ModelClass';
 import { ModelObject } from './ModelObject';
-import { InvalidValue } from 'exceptions/InvalidValue';
+import { InvalidValue } from '../exceptions/InvalidValue';
 import { IntegerObject } from './IntegerObject';
-import { NullValue } from 'exceptions/NullValue';
+import { NullValue } from '../exceptions/NullValue';
 
 export class IntegerClass extends ModelClass<number> {
   createObject(value: any): ModelObject<number> {

@@ -1,4 +1,4 @@
-import { ModelClass } from 'model';
+import { ModelClass } from '../model';
 
 export function findClass(
   classes: ModelClass<any>[],
