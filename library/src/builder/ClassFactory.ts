@@ -14,6 +14,7 @@ import {
 } from '../model/index';
 import {} from '../model/Attribute';
 import { findClass } from './ClassUtils';
+import { Project } from '../model/Project';
 
 export function modelFactory(input: any) {
   const classes: ModelClass<any>[] = [];
@@ -142,6 +143,14 @@ export function dateFactory(input: any): DateClass {
     );
     result.predicate = new PredicateRange(min, max);
   }
+  result.properties = input.properties;
+  return result;
+}
+
+export function projectFactory(input: any): Project {
+  const result = new Project(input.id);
+  result.languages = input.languages;
+  result.queryClassId = input.queryClass;
   result.properties = input.properties;
   return result;
 }
