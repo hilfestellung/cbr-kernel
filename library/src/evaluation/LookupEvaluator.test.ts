@@ -1,5 +1,4 @@
 import { LookupEvaluator, LookupMode } from './LookupEvaluator';
-import { StringClass } from '../model/StringClass';
 import { StringObject } from '../model/StringObject';
 import { Similarity } from './Similarity';
 import { ModelObject } from '../model';
@@ -14,7 +13,7 @@ describe('LookupEvaluator', () => {
   it('should create symmetric lookup', () => {
     const evaluator = new LookupEvaluator(
       'TestEval',
-      new StringClass('TestClass'),
+      'TestClass',
       LookupMode.Symmetric,
       {
         red: {
@@ -55,10 +54,7 @@ describe('LookupEvaluator', () => {
     );
   });
   it('should create asymmetric lookup', () => {
-    const evaluator = new LookupEvaluator(
-      'TestEval',
-      new StringClass('TestClass')
-    );
+    const evaluator = new LookupEvaluator('TestEval', 'TestClass');
     expect(evaluator.lookup).toEqual({});
     expect(evaluator.mode).toEqual(LookupMode.Asymmetric);
     evaluator.setLookup(
@@ -119,10 +115,7 @@ describe('LookupEvaluator', () => {
     );
   });
   it('should serialize correct to JSON', () => {
-    const evaluator = new LookupEvaluator(
-      'TestEval',
-      new StringClass('TestClass')
-    );
+    const evaluator = new LookupEvaluator('TestEval', 'TestClass');
     expect(evaluator.lookup).toEqual({});
     expect(evaluator.mode).toEqual(LookupMode.Asymmetric);
     evaluator.setLookup(

@@ -1,6 +1,6 @@
 {
   "name": "@hilfestellung/cbr-kernel",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Case Based Reasoning Kernel",
   "author": "Christian Dein",
   "license": "LGPL-2.1-or-later",
@@ -17,7 +17,8 @@
     "start": "node ./dist/index.js",
     "build": "tsc",
     "test": "run-s test:unit",
-    "test:unit": "rimraf coverage && jest --coverage"
+    "test:unit": "rimraf coverage && jest --coverage",
+    "prepublish": "run-s build"
   },
   "devDependencies": {
     "@types/jest": "^25.1.4",

@@ -1,16 +1,10 @@
 import { NumberEvaluator, NumberInterpolation } from './NumberEvaluator';
-import { IntegerClass } from '../model/IntegerClass';
 import { IntegerObject } from '../model/IntegerObject';
 import { Similarity } from './Similarity';
 
 describe('NumberEvaluator', () => {
   it('should evaluate to 1', () => {
-    const evaluator = new NumberEvaluator(
-      'TestEval',
-      new IntegerClass('TestClass'),
-      10,
-      20
-    );
+    const evaluator = new NumberEvaluator('TestEval', 'TestClass', 10, 20);
     expect(NumberInterpolation[NumberInterpolation.Polynom]).toEqual('Polynom');
     expect(NumberInterpolation['Polynom']).toEqual(NumberInterpolation.Polynom);
     expect(
@@ -18,12 +12,7 @@ describe('NumberEvaluator', () => {
     ).toEqual(new Similarity(1, new IntegerObject(15), new IntegerObject(15)));
   });
   it('should evaluate to 0.5', () => {
-    const evaluator = new NumberEvaluator(
-      'TestEval',
-      new IntegerClass('TestClass'),
-      10,
-      20
-    );
+    const evaluator = new NumberEvaluator('TestEval', 'TestClass', 10, 20);
     expect(NumberInterpolation[NumberInterpolation.Polynom]).toEqual('Polynom');
     expect(NumberInterpolation['Polynom']).toEqual(NumberInterpolation.Polynom);
     expect(
@@ -43,12 +32,7 @@ describe('NumberEvaluator', () => {
     );
   });
   it('should evaluate to 0', () => {
-    const evaluator = new NumberEvaluator(
-      'TestEval',
-      new IntegerClass('TestClass'),
-      10,
-      20
-    );
+    const evaluator = new NumberEvaluator('TestEval', 'TestClass', 10, 20);
     expect(
       evaluator.evaluate(new IntegerObject(10), new IntegerObject(20))
     ).toEqual(new Similarity(0, new IntegerObject(10), new IntegerObject(20)));
@@ -57,12 +41,7 @@ describe('NumberEvaluator', () => {
     ).toEqual(new Similarity(0, new IntegerObject(20), new IntegerObject(10)));
   });
   it('should serialize correct to JSON', () => {
-    const evaluator = new NumberEvaluator(
-      'TestEval',
-      new IntegerClass('TestClass'),
-      20,
-      10
-    );
+    const evaluator = new NumberEvaluator('TestEval', 'TestClass', 20, 10);
     expect(evaluator.toJSON()).toEqual({
       id: 'TestEval',
       type: 'TestClass',

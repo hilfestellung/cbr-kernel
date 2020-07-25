@@ -1,4 +1,4 @@
-import { ModelClass, ModelObject } from '../model';
+import { ModelObject } from '../model';
 import { Similarity } from './Similarity';
 
 export class SimilarityEvaluator<T> {
