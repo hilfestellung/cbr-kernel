@@ -22,10 +22,16 @@ export class DateClass extends ModelClass<Date> {
       result = new DateObject(id);
       result.properties = properties;
       return result;
-    } else if (typeof id === 'number' || typeof id === 'string') {
-      result = new DateObject(new Date(id));
+    } else if (typeof id === 'string') {
+      if (id.endsWith('Z')) {
+        result = new DateObject(new Date(id));
+      } else {
+        result = new DateObject(new Date(id + 'Z'));
+      }
       result.properties = properties;
       return result;
+    } else if (typeof id === 'number') {
+      result = new DateObject(new Date(id));
     }
     throw new InvalidValue();
   }

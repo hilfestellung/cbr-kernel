@@ -1,5 +1,5 @@
 import { SimilarityEvaluator } from './SimilarityEvaluator';
-import { ModelObject, ModelClass } from '../model';
+import { ModelObject } from '../model';
 import { Similarity } from './Similarity';
 
 function makeSymmetric(lookup: LookupTable): LookupTable {
@@ -36,18 +36,18 @@ export class LookupEvaluator extends SimilarityEvaluator<any> {
 
   constructor(
     id: string,
-    modelClass: ModelClass<any>,
-    mode?: LookupMode,
+    typeId: string,
+    mode?: LookupMode | string,
     lookup?: LookupTable
   ) {
-    super(id, modelClass);
+    super(id, typeId);
     if (lookup == null) {
       lookup = {};
     }
     if (mode == null) {
       mode = LookupMode.Asymmetric;
     }
-    this.setLookup(lookup, mode);
+    this.setLookup(lookup, LookupMode[mode]);
   }
 
   get mode() {
@@ -92,7 +92,7 @@ export class LookupEvaluator extends SimilarityEvaluator<any> {
 
   toJSON(key?: string): any {
     const result = super.toJSON(key);
-    result.mode = this.mode.toString();
+    result.mode = LookupMode[this.mode];
     result.lookup = this.lookupOrigin;
     return result;
   }

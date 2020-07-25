@@ -14,6 +14,7 @@ export * from './Predicate';
 export * from './PredicateAggregate';
 export * from './PredicateEnumeration';
 export * from './PredicateRange';
+export * from './Project';
 export * from './SetClass';
 export * from './SetObject';
 export * from './StringClass';

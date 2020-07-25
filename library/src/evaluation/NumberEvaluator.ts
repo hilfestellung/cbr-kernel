@@ -1,6 +1,5 @@
 import { Similarity } from './Similarity';
 import { SimilarityEvaluator } from './SimilarityEvaluator';
-import { ModelClass } from '../model/ModelClass';
 import { ModelObject } from '../model/ModelObject';
 
 function getDistance(
@@ -171,12 +170,12 @@ export class NumberEvaluator extends SimilarityEvaluator<number | Date> {
 
   constructor(
     public id: string,
-    public modelClass: ModelClass<number>,
+    typeId: string,
     min: number,
     max: number,
     options?: NumberEvaluatorOptions
   ) {
-    super(id, modelClass);
+    super(id, typeId);
     const configOptions = {
       ...defaultNumberSimilarityOptions,
       ...options,
@@ -286,6 +285,8 @@ export class NumberEvaluator extends SimilarityEvaluator<number | Date> {
 
   toJSON(): any {
     const result = super.toJSON();
+    result.min = this.min;
+    result.max = this.max;
     result.cyclic = this.cyclic;
     result.origin = this.origin;
     result.useOrigin = this.useOrigin;

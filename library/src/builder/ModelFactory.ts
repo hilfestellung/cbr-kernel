@@ -9,12 +9,19 @@ import {
   PredicateAggregate,
   PredicateEnumeration,
   PredicateRange,
+  Project,
   SetClass,
   StringClass,
 } from '../model/index';
-import {} from '../model/Attribute';
+import {
+  SimilarityEvaluator,
+  AggregateEvaluator,
+  NumberEvaluator,
+  LookupEvaluator,
+  SetEvaluator,
+} from '../evaluation';
+
 import { findClass } from './ClassUtils';
-import { Project } from '../model/Project';
 
 export function modelFactory(input: any) {
   const classes: ModelClass<any>[] = [];
@@ -55,6 +62,22 @@ export function classFactory(input: any): ModelClass<any> | null {
       return stringFactory(input);
     case 'date':
       return dateFactory(input);
+    default:
+      return null;
+  }
+}
+export function evaluatorFactory(input: any): SimilarityEvaluator<any> | null {
+  switch (input.type) {
+    case 'aggregate':
+      return aggregateEvaluatorFactory(input);
+    case 'set':
+      return setEvaluatorFactory(input);
+    case 'integer':
+    case 'float':
+    case 'date':
+      return numberEvaluatorFactory(input);
+    case 'string':
+      return lookupEvaluatorFactory(input);
     default:
       return null;
   }
@@ -153,4 +176,54 @@ export function projectFactory(input: any): Project {
   result.queryClassId = input.queryClass;
   result.properties = input.properties;
   return result;
+}
+
+export function aggregateEvaluatorFactory(input: any): AggregateEvaluator {
+  const result = new AggregateEvaluator(input.id, input.type, input.mode);
+  if (Array.isArray(input.attributes)) {
+    result.attributes = input.attributes.map(
+      (attributeLinkDefinition: any) => ({
+        id: attributeLinkDefinition.id,
+        evaluator: attributeLinkDefinition.evaluator,
+        weight: attributeLinkDefinition.weight,
+      })
+    );
+  }
+  return result;
+}
+
+export function numberEvaluatorFactory(input: any): NumberEvaluator {
+  const options = {
+    cyclic: input.cyclic,
+    origin: input.origin,
+    useOrigin: input.useOrigin,
+    equalIfLess: input.equalIfLess,
+    equalIfMore: input.equalIfMore,
+    toleranceIfLess: input.toleranceIfLess,
+    toleranceIfMore: input.toleranceIfMore,
+    linearityIfLess: input.linearityIfLess,
+    linearityIfMore: input.linearityIfMore,
+    interpolationIfLess: input.interpolationIfLess,
+    interpolationIfMore: input.interpolationIfMore,
+  };
+  return new NumberEvaluator(
+    input.id,
+    input.type,
+    parseInt(input.min, 10),
+    parseInt(input.max, 10),
+    options
+  );
+}
+
+export function lookupEvaluatorFactory(input: any): LookupEvaluator {
+  return new LookupEvaluator(input.id, input.type, input.mode, input.lookup);
+}
+
+export function setEvaluatorFactory(input: any): SetEvaluator {
+  return new SetEvaluator(
+    input.id,
+    input.type,
+    input.comparisonType,
+    input.elementEvaluator
+  );
 }

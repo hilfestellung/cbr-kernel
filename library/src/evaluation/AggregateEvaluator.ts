@@ -1,14 +1,9 @@
-import { AggregateClass } from '../model/AggregateClass';
 import { AggregateObject } from '../model/AggregateObject';
-import { ModelClass } from '../model/ModelClass';
 import { ModelObject } from '../model/ModelObject';
 import { Similarity } from './Similarity';
 import { SimilarityEvaluator } from './SimilarityEvaluator';
 
-export const DEFAULT_EVALUATOR = new SimilarityEvaluator(
-  'default',
-  (null as unknown) as ModelClass<any>
-);
+export const DEFAULT_EVALUATOR = new SimilarityEvaluator('default', 'default');
 
 export enum AggregateSimilarityMode {
   average,
@@ -24,6 +19,10 @@ export interface AttributeEvaluatorLink {
 }
 
 export class AggregateEvaluator extends SimilarityEvaluator<any> {
+  private evaluationMode: AggregateSimilarityMode;
+  private measureCache: any = {};
+  private weightCache: any = {};
+
   public attributes: AttributeEvaluatorLink[];
   public evaluators: SimilarityEvaluator<any>[];
 
@@ -47,18 +46,17 @@ export class AggregateEvaluator extends SimilarityEvaluator<any> {
         this.evaluate = this.average;
     }
   }
-  public weights: { [attributeId: string]: number };
-  public measures: { [attributeId: string]: SimilarityEvaluator<any> };
 
   constructor(
     public id: string,
-    public modelClass: AggregateClass,
-    private evaluationMode: AggregateSimilarityMode
+    typeId: string,
+    evaluationMode: AggregateSimilarityMode | string
   ) {
-    super(id, modelClass);
-    this.weights = {};
-    this.measures = {};
-    this.mode = evaluationMode;
+    super(id, typeId);
+    this.evaluationMode = AggregateSimilarityMode[evaluationMode];
+    this.mode = this.evaluationMode;
+    this.attributes = [];
+    this.evaluators = [];
   }
 
   private average(
@@ -73,7 +71,7 @@ export class AggregateEvaluator extends SimilarityEvaluator<any> {
     let evaluator: SimilarityEvaluator<any>;
     let hasSimilarity = false;
     Object.keys(qo.native).forEach((attributeId: string) => {
-      weight = this.weights[attributeId] || 0;
+      weight = this.getWeight(attributeId);
       evaluator = this.getMeasure(attributeId);
       if (weight > 0 && evaluator != null) {
         const evaluation = evaluator.evaluate(
@@ -97,18 +95,39 @@ export class AggregateEvaluator extends SimilarityEvaluator<any> {
     return result;
   }
 
-  private getMeasure(attributeId: string): SimilarityEvaluator<any> {
-    const attributeEvaluatorLink = this.attributes.find(
-      (ad) => ad.id === attributeId
-    );
-    if (attributeEvaluatorLink != null) {
-      return (
-        this.evaluators.find(
-          (evaluator) => evaluator.id === attributeEvaluatorLink.evaluator
-        ) || DEFAULT_EVALUATOR
+  private getWeight(attributeId: string): number {
+    let result = this.weightCache[attributeId];
+    if (result == null) {
+      const attributeEvaluatorLink = this.attributes.find(
+        (ad) => ad.id === attributeId
       );
+      if (attributeEvaluatorLink != null) {
+        result = attributeEvaluatorLink.weight || 0;
+      } else {
+        result = 0;
+      }
+      this.weightCache[attributeId] = result;
     }
-    return DEFAULT_EVALUATOR;
+    return result;
+  }
+
+  private getMeasure(attributeId: string): SimilarityEvaluator<any> {
+    let result = this.measureCache[attributeId];
+    if (result == null) {
+      const attributeEvaluatorLink = this.attributes.find(
+        (ad) => ad.id === attributeId
+      );
+      if (attributeEvaluatorLink != null) {
+        result =
+          this.evaluators.find(
+            (evaluator) => evaluator.id === attributeEvaluatorLink.evaluator
+          ) || DEFAULT_EVALUATOR;
+      } else {
+        result = DEFAULT_EVALUATOR;
+      }
+      this.measureCache[attributeId] = result;
+    }
+    return result;
   }
 
   private min(
@@ -127,7 +146,7 @@ export class AggregateEvaluator extends SimilarityEvaluator<any> {
     let measure: SimilarityEvaluator<any>;
     Object.keys(qo.native).forEach((attributeId: string) => {
       if (qo.native[attributeId]) {
-        measure = this.measures[attributeId];
+        measure = this.getMeasure(attributeId);
         if (measure) {
           newSimilarity = measure.evaluate(
             qo.native[attributeId],
@@ -158,7 +177,7 @@ export class AggregateEvaluator extends SimilarityEvaluator<any> {
     let measure: SimilarityEvaluator<any>;
     Object.keys(qo.native).forEach((attributeId: string) => {
       if (qo.native[attributeId]) {
-        measure = this.measures[attributeId];
+        measure = this.getMeasure(attributeId);
         if (measure) {
           newSimilarity = measure.evaluate(
             qo.native[attributeId],
@@ -189,7 +208,7 @@ export class AggregateEvaluator extends SimilarityEvaluator<any> {
     let measure: SimilarityEvaluator<any>;
     Object.keys(qo.native).forEach((attributeId: string) => {
       if (qo.native[attributeId]) {
-        measure = this.measures[attributeId];
+        measure = this.getMeasure(attributeId);
         if (measure) {
           newSimilarity = measure.evaluate(
             qo.native[attributeId],
@@ -205,7 +224,7 @@ export class AggregateEvaluator extends SimilarityEvaluator<any> {
 
   toJSON(key?: string): any {
     const result: any = super.toJSON(key);
-    result.mode = this.mode.toString();
+    result.mode = AggregateSimilarityMode[this.evaluationMode];
     result.attributes = this.attributes.map((measureDefinition) => ({
       id: measureDefinition.id,
       evaluator: measureDefinition.evaluator,

@@ -1,2 +1,2 @@
-export * from './ClassFactory';
+export * from './ModelFactory';
 export * from './ClassUtils';

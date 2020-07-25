@@ -1,6 +1,5 @@
 import { Similarity } from './Similarity';
 import { SimilarityEvaluator } from './SimilarityEvaluator';
-import { ModelClass } from '../model/ModelClass';
 import { ModelObject } from '../model/ModelObject';
 import { SetObject } from '../model/SetObject';
 
@@ -88,14 +87,16 @@ export enum SetComparisonType {
 }
 
 export class SetEvaluator extends SimilarityEvaluator<any> {
+  private comparisonType: SetComparisonType;
   public evaluator: SimilarityEvaluator<any>;
   constructor(
     public id: string,
-    public modelClass: ModelClass<any>,
-    public comparisonType: SetComparisonType,
+    typeId: string,
+    comparisonType: SetComparisonType | string,
     public elementEvaluatorId: string
   ) {
-    super(id, modelClass);
+    super(id, typeId);
+    this.comparisonType = SetComparisonType[comparisonType];
   }
 
   evaluate(
