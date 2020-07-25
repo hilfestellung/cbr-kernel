@@ -210,6 +210,10 @@ export class NumberEvaluator extends SimilarityEvaluator<number | Date> {
     }
   }
 
+  get pattern(): string {
+    return 'number';
+  }
+
   public getMin(): number | Date {
     return this.min;
   }
@@ -283,8 +287,8 @@ export class NumberEvaluator extends SimilarityEvaluator<number | Date> {
     return new Similarity(0, queryObject, caseObject);
   }
 
-  toJSON(): any {
-    const result = super.toJSON();
+  toJSON(key?: string): any {
+    const result = super.toJSON(key);
     result.min = this.min;
     result.max = this.max;
     result.cyclic = this.cyclic;

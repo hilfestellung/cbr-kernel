@@ -59,6 +59,10 @@ export class AggregateEvaluator extends SimilarityEvaluator<any> {
     this.evaluators = [];
   }
 
+  get pattern(): string {
+    return 'aggregate';
+  }
+
   private average(
     queryObject: ModelObject<any>,
     caseObject: ModelObject<any>

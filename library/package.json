@@ -1,6 +1,6 @@
 {
   "name": "@hilfestellung/cbr-kernel",
-  "version": "0.0.9",
+  "version": "0.0.12",
   "description": "Case Based Reasoning Kernel",
   "author": "Christian Dein",
   "license": "LGPL-2.1-or-later",

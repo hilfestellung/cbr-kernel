@@ -67,16 +67,14 @@ export function classFactory(input: any): ModelClass<any> | null {
   }
 }
 export function evaluatorFactory(input: any): SimilarityEvaluator<any> | null {
-  switch (input.type) {
+  switch (input.pattern) {
     case 'aggregate':
       return aggregateEvaluatorFactory(input);
     case 'set':
       return setEvaluatorFactory(input);
-    case 'integer':
-    case 'float':
-    case 'date':
+    case 'number':
       return numberEvaluatorFactory(input);
-    case 'string':
+    case 'lookup':
       return lookupEvaluatorFactory(input);
     default:
       return null;

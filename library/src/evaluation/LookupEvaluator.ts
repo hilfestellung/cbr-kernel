@@ -50,6 +50,10 @@ export class LookupEvaluator extends SimilarityEvaluator<any> {
     this.setLookup(lookup, LookupMode[mode]);
   }
 
+  get pattern(): string {
+    return 'lookup';
+  }
+
   get mode() {
     return this.modeHolder;
   }

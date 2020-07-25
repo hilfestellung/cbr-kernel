@@ -8,6 +8,10 @@ export class SimilarityEvaluator<T> {
     this.typeId = typeId;
   }
 
+  get pattern(): string {
+    return 'default';
+  }
+
   get typeId(): string {
     return this.typeIdHolder;
   }
@@ -31,6 +35,6 @@ export class SimilarityEvaluator<T> {
   }
 
   toJSON(_key?: string): any {
-    return { id: this.id, type: this.typeId };
+    return { id: this.id, type: this.typeId, pattern: this.pattern };
   }
 }

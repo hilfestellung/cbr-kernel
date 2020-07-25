@@ -99,6 +99,10 @@ export class SetEvaluator extends SimilarityEvaluator<any> {
     this.comparisonType = SetComparisonType[comparisonType];
   }
 
+  get pattern(): string {
+    return 'set';
+  }
+
   evaluate(
     queryObject: ModelObject<ModelObject<any>[]>,
     caseObject: ModelObject<ModelObject<any>[]>
