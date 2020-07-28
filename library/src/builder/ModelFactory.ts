@@ -28,24 +28,28 @@ export function modelFactory(input: any) {
   const result = { classes };
   if (Array.isArray(input.classes)) {
     classes.splice(0, 0, input.classes.map(classFactory));
-    classes
-      .filter((clazz) => clazz.isAggregate())
-      .forEach((clazz: AggregateClass) => {
-        clazz.attributes.forEach((attribute) => {
-          if (attribute.typeId) {
-            attribute.modelClass = findClass(classes, attribute.typeId);
-          }
-        });
-      });
-    classes
-      .filter((clazz) => clazz.isSet())
-      .forEach((clazz: SetClass<any>) => {
-        if (clazz.elementTypeId) {
-          clazz.elementModelClass = findClass(classes, clazz.elementTypeId);
-        }
-      });
+    adjustClasses(classes);
   }
   return result;
+}
+
+export function adjustClasses(classes: ModelClass<any>[]) {
+  classes
+    .filter((clazz) => clazz.isAggregate())
+    .forEach((clazz: AggregateClass) => {
+      clazz.attributes.forEach((attribute) => {
+        if (attribute.typeId) {
+          attribute.modelClass = findClass(classes, attribute.typeId);
+        }
+      });
+    });
+  classes
+    .filter((clazz) => clazz.isSet())
+    .forEach((clazz: SetClass<any>) => {
+      if (clazz.elementTypeId) {
+        clazz.elementModelClass = findClass(classes, clazz.elementTypeId);
+      }
+    });
 }
 
 export function classFactory(input: any): ModelClass<any> | null {
@@ -173,6 +177,8 @@ export function projectFactory(input: any): Project {
   result.languages = input.languages;
   result.queryClassId = input.queryClass;
   result.properties = input.properties;
+  result.classIds = input.classes;
+  result.evaluatorIds = input.evaluators;
   return result;
 }
 
