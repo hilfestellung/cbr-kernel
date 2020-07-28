@@ -207,8 +207,8 @@ export function numberEvaluatorFactory(input: any): NumberEvaluator {
   return new NumberEvaluator(
     input.id,
     input.type,
-    parseInt(input.min, 10),
-    parseInt(input.max, 10),
+    parseInt(input.min || '0', 10),
+    parseInt(input.max || '0', 10),
     options
   );
 }

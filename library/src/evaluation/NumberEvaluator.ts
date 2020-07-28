@@ -2,6 +2,16 @@ import { Similarity } from './Similarity';
 import { SimilarityEvaluator } from './SimilarityEvaluator';
 import { ModelObject } from '../model/ModelObject';
 
+function toNumber(input: number | Date, defaultValue: number = 0): number {
+  if (input instanceof Date) {
+    return input.getTime();
+  }
+  if (input == null || isNaN(input)) {
+    return defaultValue;
+  }
+  return input;
+}
+
 function getDistance(
   v1: number,
   v2: number,
@@ -134,11 +144,11 @@ const defaultNumberSimilarityOptions = {
   useOrigin: false,
 
   equalIfLess: 0,
-  toleranceIfLess: 1,
+  toleranceIfLess: 0.5,
   linearityIfLess: 1,
 
   equalIfMore: 0,
-  toleranceIfMore: 1,
+  toleranceIfMore: 0.5,
   linearityIfMore: 1,
 
   interpolationIfLess: NumberInterpolation[NumberInterpolation.Polynom],
@@ -180,8 +190,6 @@ export class NumberEvaluator extends SimilarityEvaluator<number | Date> {
       ...defaultNumberSimilarityOptions,
       ...options,
     };
-    this.min = min;
-    this.max = max;
     this.cyclic = configOptions.cyclic;
     this.origin = configOptions.origin;
     this.useOrigin = configOptions.useOrigin;
@@ -199,15 +207,7 @@ export class NumberEvaluator extends SimilarityEvaluator<number | Date> {
 
     this.interpolationIfMore =
       NumberInterpolation[configOptions.interpolationIfMore];
-    if (min > max) {
-      const tmp = this.min;
-      this.min = max;
-      this.max = tmp;
-    }
-    this.maxDistance = this.max - this.min;
-    if (this.cyclic) {
-      this.maxDistance /= 2;
-    }
+    this.setRange(min, max);
   }
 
   get pattern(): string {
@@ -220,6 +220,22 @@ export class NumberEvaluator extends SimilarityEvaluator<number | Date> {
 
   public getMax(): number | Date {
     return this.max;
+  }
+
+  setRange(min: number | Date, max: number | Date) {
+    min = toNumber(min, Number.MIN_SAFE_INTEGER);
+    max = toNumber(max, Number.MAX_SAFE_INTEGER);
+    if (min > max) {
+      this.min = max;
+      this.max = min;
+    } else {
+      this.min = min;
+      this.max = max;
+    }
+    this.maxDistance = this.max - this.min;
+    if (this.cyclic) {
+      this.maxDistance /= 2;
+    }
   }
 
   evaluate(
@@ -289,8 +305,6 @@ export class NumberEvaluator extends SimilarityEvaluator<number | Date> {
 
   toJSON(key?: string): any {
     const result = super.toJSON(key);
-    result.min = this.min;
-    result.max = this.max;
     result.cyclic = this.cyclic;
     result.origin = this.origin;
     result.useOrigin = this.useOrigin;
