@@ -6,10 +6,10 @@ import { SimilarityEvaluator } from './SimilarityEvaluator';
 export const DEFAULT_EVALUATOR = new SimilarityEvaluator('default', 'default');
 
 export enum AggregateSimilarityMode {
-  average,
-  min,
-  max,
-  euclidean,
+  Average,
+  Min,
+  Max,
+  Euclidean,
 }
 
 export interface AttributeEvaluatorLink {
@@ -32,16 +32,16 @@ export class AggregateEvaluator extends SimilarityEvaluator<any> {
   set mode(value: AggregateSimilarityMode) {
     this.evaluationMode = value;
     switch (value) {
-      case AggregateSimilarityMode.min:
+      case AggregateSimilarityMode.Min:
         this.evaluate = this.min;
         break;
-      case AggregateSimilarityMode.max:
+      case AggregateSimilarityMode.Max:
         this.evaluate = this.max;
         break;
-      case AggregateSimilarityMode.euclidean:
+      case AggregateSimilarityMode.Euclidean:
         this.evaluate = this.euclidean;
         break;
-      case AggregateSimilarityMode.average:
+      case AggregateSimilarityMode.Average:
       default:
         this.evaluate = this.average;
     }

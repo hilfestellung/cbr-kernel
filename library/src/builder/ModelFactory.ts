@@ -19,6 +19,7 @@ import {
   NumberEvaluator,
   LookupEvaluator,
   SetEvaluator,
+  DEFAULT_EVALUATOR,
 } from '../evaluation';
 
 import { findClass } from './ClassUtils';
@@ -80,8 +81,9 @@ export function evaluatorFactory(input: any): SimilarityEvaluator<any> | null {
       return numberEvaluatorFactory(input);
     case 'lookup':
       return lookupEvaluatorFactory(input);
+    case 'default':
     default:
-      return null;
+      return DEFAULT_EVALUATOR;
   }
 }
 
