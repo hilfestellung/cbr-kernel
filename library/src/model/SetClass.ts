@@ -38,9 +38,7 @@ export class SetClass<T> extends ModelClass<ModelObject<T>[]> {
 
   toJSON(key?: string): any {
     const result = super.toJSON(key);
-    if (this.elementModelClass != null) {
-      result.elementType = this.elementModelClass.id;
-    }
+    result.elementType = this.elementTypeId;
     return result;
   }
 }

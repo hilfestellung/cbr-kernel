@@ -21,9 +21,10 @@ export abstract class ModelClass<T> extends ModelElement {
     } else if (this.predicate.isAggregate()) {
       return this.createObject(value);
     } else if (this.predicate.isEnumerable()) {
+      const toFind = value && value.id ? value.id : value;
       const result = this.predicate
         .getEnumeration()
-        .find((entry) => value === entry.id);
+        .find((entry) => toFind === entry.id);
       if (result == null) {
         throw new InvalidModelObject(
           `The specified value is not an element of the enumeration of class ${this.id}`

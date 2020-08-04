@@ -52,7 +52,7 @@ export interface Retriever {
     options?: RetrieverEvaluationOptions
   ): RetrieverResult;
   addCase(aggregate: AggregateObject): void;
-  removeCase(id: string): AggregateObject;
+  removeCase(id: string): AggregateObject | undefined;
   findCases(
     attribute: Attribute,
     values: ModelObject<any>[]

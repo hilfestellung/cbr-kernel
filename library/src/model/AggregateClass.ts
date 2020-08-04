@@ -19,7 +19,7 @@ export class AggregateClass extends ModelClass<any> {
 
   createObject(value: any): ModelObject<any> {
     const aggregate = {};
-    const id: string = value._id || v4();
+    const id: string = (value && value._id) || v4();
     if (Array.isArray(value)) {
       value.forEach((entry) => {
         const attribute = this.attributeMap[entry.id];

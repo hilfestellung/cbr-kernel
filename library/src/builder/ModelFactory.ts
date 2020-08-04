@@ -181,6 +181,7 @@ export function projectFactory(input: any): Project {
   result.properties = input.properties;
   result.classIds = input.classes;
   result.evaluatorIds = input.evaluators;
+  result.defaultEvaluatorId = input.defaultEvaluatorId;
   return result;
 }
 

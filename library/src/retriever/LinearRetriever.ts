@@ -125,19 +125,49 @@ export class LinearRetriever implements Retriever {
     };
   }
 
-  addCase(_aggregate: AggregateObject): void {
-    throw new Error('Method not implemented.');
+  addCase(aggregate: AggregateObject): void {
+    this.casebase.push(aggregate);
   }
 
-  removeCase(_id: string): AggregateObject {
-    throw new Error('Method not implemented.');
+  removeCase(id: string): AggregateObject | undefined {
+    const result = this.casebase.find((aggregate) => aggregate.id === id);
+    this.casebase = this.casebase.filter((aggregate) => aggregate.id !== id);
+    return result;
   }
 
   findCases(
-    _attribute: Attribute,
-    _values: import('..').ModelObject<any>[]
-  ): import('..').AggregateObject[] {
-    throw new Error('Method not implemented.');
+    attribute: Attribute,
+    values: ModelObject<any>[]
+  ): AggregateObject[] {
+    return this.casebase.filter((object) => {
+      let found = false;
+      Object.keys(object.native).forEach((attributeId: string) => {
+        if (found) {
+          return;
+        }
+        if (attributeId === attribute.id) {
+          const nativeValue = object.native[attributeId];
+          if (Array.isArray(nativeValue)) {
+            for (let i = 0, n = values.length; i < n; i++) {
+              if (
+                nativeValue.find((entry) => values[i].equals(entry)) != null
+              ) {
+                found = true;
+                return;
+              }
+            }
+          } else {
+            for (let i = 0, n = values.length; i < n; i++) {
+              if (values[i].equals(nativeValue)) {
+                found = true;
+                return;
+              }
+            }
+          }
+        }
+      });
+      return found;
+    });
   }
 
   private calculateEntropy(facet: FacetResult, divider: number) {

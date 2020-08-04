@@ -72,7 +72,7 @@ export class Project extends ModelObject<string> {
   }
 
   getEvaluator(id: string | undefined): SimilarityEvaluator<any> {
-    if (id != null) {
+    if (id == null) {
       return DEFAULT_EVALUATOR;
     }
     return (
@@ -91,8 +91,6 @@ export class Project extends ModelObject<string> {
     result.queryClass =
       this.queryClassId != null ? this.queryClassId : undefined;
     result.defaultEvaluatorId = this.defaultEvaluatorId;
-    result.classes = this.classIds;
-    result.evaluators = this.evaluatorIds;
     return result;
   }
 }

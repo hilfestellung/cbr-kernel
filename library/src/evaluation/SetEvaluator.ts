@@ -81,9 +81,9 @@ const intermediate = (
 };
 
 export enum SetComparisonType {
-  QueryInclusion,
-  CaseInclusion,
-  Intermediate,
+  QueryInclusion = 'QueryInclusion',
+  CaseInclusion = 'CaseInclusion',
+  Intermediate = 'Intermediate',
 }
 
 export class SetEvaluator extends SimilarityEvaluator<any> {
