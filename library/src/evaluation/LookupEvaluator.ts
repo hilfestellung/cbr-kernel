@@ -21,8 +21,8 @@ function makeSymmetric(lookup: LookupTable): LookupTable {
 }
 
 export enum LookupMode {
-  Symmetric,
-  Asymmetric,
+  Symmetric = 'Symmetric',
+  Asymmetric = 'Asymmetric',
 }
 
 export interface LookupTable {

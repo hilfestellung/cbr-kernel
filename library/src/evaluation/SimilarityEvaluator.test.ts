@@ -41,6 +41,10 @@ describe('SimilarityEvaluator', () => {
   });
   it('should serialize to correct JSON', () => {
     const evaluator = new SimilarityEvaluator('TestEval', 'TestClass');
-    expect(evaluator.toJSON()).toEqual({ id: 'TestEval', type: 'TestClass' });
+    expect(evaluator.toJSON()).toEqual({
+      id: 'TestEval',
+      type: 'TestClass',
+      pattern: 'default',
+    });
   });
 });

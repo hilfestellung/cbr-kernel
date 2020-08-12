@@ -31,7 +31,7 @@ export class DateClass extends ModelClass<Date> {
       result.properties = properties;
       return result;
     } else if (typeof id === 'number') {
-      result = new DateObject(new Date(id));
+      return new DateObject(new Date(id));
     }
     throw new InvalidValue();
   }

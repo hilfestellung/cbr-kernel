@@ -12,7 +12,19 @@ describe('NumberEvaluator', () => {
     ).toEqual(new Similarity(1, new IntegerObject(15), new IntegerObject(15)));
   });
   it('should evaluate to 0.5', () => {
-    const evaluator = new NumberEvaluator('TestEval', 'TestClass', 10, 20);
+    const evaluator = new NumberEvaluator('TestEval', 'TestClass', 10, 20, {
+      cyclic: false,
+      origin: 0,
+      useOrigin: false,
+      equalIfLess: 0,
+      equalIfMore: 0,
+      toleranceIfLess: 1,
+      toleranceIfMore: 1,
+      linearityIfLess: 1,
+      linearityIfMore: 1,
+      interpolationIfLess: NumberInterpolation.Polynom,
+      interpolationIfMore: NumberInterpolation.Polynom,
+    });
     expect(NumberInterpolation[NumberInterpolation.Polynom]).toEqual('Polynom');
     expect(NumberInterpolation['Polynom']).toEqual(NumberInterpolation.Polynom);
     expect(
@@ -45,13 +57,14 @@ describe('NumberEvaluator', () => {
     expect(evaluator.toJSON()).toEqual({
       id: 'TestEval',
       type: 'TestClass',
+      pattern: 'number',
       cyclic: false,
       origin: 0,
       useOrigin: false,
       equalIfLess: 0,
       equalIfMore: 0,
-      toleranceIfLess: 1,
-      toleranceIfMore: 1,
+      toleranceIfLess: 0.5,
+      toleranceIfMore: 0.5,
       linearityIfLess: 1,
       linearityIfMore: 1,
       interpolationIfLess: 'Polynom',

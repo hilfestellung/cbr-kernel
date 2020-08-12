@@ -99,9 +99,9 @@ function computeSigmoid(input: number, linearity: number): number {
 }
 
 export enum NumberInterpolation {
-  Polynom,
-  Sigmoid,
-  Root,
+  Polynom = 'Polynom',
+  Sigmoid = 'Sigmoid',
+  Root = 'Root',
 }
 
 function getInterpolation(

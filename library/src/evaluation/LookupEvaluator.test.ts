@@ -134,7 +134,8 @@ describe('LookupEvaluator', () => {
     expect(evaluator.toJSON()).toEqual({
       id: 'TestEval',
       type: 'TestClass',
-      mode: 'asymmetric',
+      pattern: 'lookup',
+      mode: 'Asymmetric',
       lookup: {
         red: {
           orange: 0.7,
