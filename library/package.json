@@ -1,12 +1,12 @@
 {
   "name": "@hilfestellung/cbr-kernel",
-  "version": "0.0.33",
+  "version": "0.0.34",
   "description": "Case Based Reasoning Kernel",
   "author": "Christian Dein",
   "license": "LGPL-2.1-or-later",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hilfestellung/react-access-control.git"
+    "url": "git+https://github.com/hilfestellung/cbr-kernel.git"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
